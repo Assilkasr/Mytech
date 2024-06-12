@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping("/api")
@@ -22,7 +24,22 @@ public class EquipController {
     private final EquipService equipService;
 
     @PostMapping("/register")
-    public Equipement registerEquipment(@RequestParam String name, @RequestParam String status, @RequestParam String client) {
-        return equipService.registerEquip(name, status, client);
+    public Equipement registerEquipment(@RequestParam("name") String name, @RequestParam("status") String status) {
+        return equipService.registerEquip(name, status);
+    }
+
+    @GetMapping("/list")
+    public List<Equipement> getAllEquipements() {
+        return equipService.getAllEquipements();
+    }
+
+    @GetMapping("/{id}")
+    public Equipement getEquipementById(@PathVariable Long id) {
+        return equipService.getEquipementById(id);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteEquipement(@PathVariable Long id) {
+        equipService.deleteEquipement(id);
     }
 }
